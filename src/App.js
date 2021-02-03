@@ -1,25 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useEffect} from 'react'
+import {observer} from "mobx-react-lite";
+import todoInstance from './store/todo'
+import todo from "./store/todo";
+import inputInstance from './store/input'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+
+const App = observer(() => {
+    useEffect(() => todo.getTodo(), [])
+    return (
+
+        <div>
+            {todoInstance.todos.map((element) => <h3 id={element.id}>
+                    <h1>{element.todo}</h1>
+                    <button onClick={() => todoInstance.removeTodo(element.id)}>Удалить задачу</button>
+                    <input type="checkbox" value={element.checkTodo}
+                           onClick={() => todo.checkTodo(element)}/>
+                </h3>
+            )}
+            <form onSubmit={event => {
+                event.preventDefault();
+                if (inputInstance.value !== '') {
+                    todo.addTodo(inputInstance.value);
+                }
+                inputInstance.value = ''
+            }}>
+                <input
+                    value={inputInstance.value}
+                    onChange={event => {
+                        inputInstance.value = event.target.value
+                    }}
+                />
+            </form>
+        </div>
+
+    );
+})
 
 export default App;

@@ -1,9 +1,9 @@
 import './App.css';
 import React, {useEffect} from 'react'
 import {observer} from "mobx-react-lite";
-import todoInstance from './store/todo'
-import todo from "./store/todo";
-import inputInstance from './store/input'
+import todoInstance from './store/Todo'
+import todo from "./store/Todo";
+import inputInstance from './store/Input'
 
 
 const App = observer(() => {
